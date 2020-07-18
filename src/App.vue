@@ -6,16 +6,14 @@
 </template>
 
 <script>
-    // import LoginForm from './components/LoginForm.vue'
-    import CotterForm from './components/CotterForm.vue'
+import CotterForm from './components/CotterForm.vue'
 
-    export default {
+ export default {
     name: 'App',
         components: {
-            // LoginForm,
             CotterForm
         }
-    }
+}
 </script>
 
 <style>
@@ -32,7 +30,4 @@
         border: 1px solid #009435;
     }
 
-    .small-container {
-        align-items: center;
-    }
 </style>

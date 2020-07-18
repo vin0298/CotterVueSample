@@ -2,11 +2,7 @@
     <div id="cotter-block">
         <div id="cotter-form-container"></div>
         <div v-show="success" id="cotter-verify-block">
-            <button @submit.prevent="verifyCotter" id="verify-button">Verify</button>
-            <pre> 
-                {{ payloadString }}
-            </pre>
-       
+            <button @click="verifyCotter()" id="verify-button">Verify</button>
         </div>
     </div>
 </template>
@@ -14,7 +10,7 @@
 
 <script>
 import Cotter from 'cotter';
-import CotterIdentity from 'cotter-token-js';
+import {CotterIdentity} from 'cotter-token-js';
 
 export default {
     name: 'cotter-form',
@@ -27,8 +23,6 @@ export default {
         }
     },
     mounted () {
-        console.log("this success: ", this.success);
-
         var config = {
             ApiKeyID: "28c090a0-6067-457d-976a-b0ac664f05fc",
             Type: "EMAIL",
@@ -38,10 +32,12 @@ export default {
             OnSuccess: payload => {
                 this.success = true;
                 this.payload = payload;
-                this.payloadString = JSON.stringify(payload, null);
+                this.payloadString = JSON.stringify(payload, null, 4);
+                alert(this.payloadString);
             },
             OnError: (error) => {
                 console.log(error);
+                alert(error);
             }
         };
 
@@ -50,8 +46,12 @@ export default {
     },
     methods: {
         verifyCotter() {
-            var cotterIdentity = new CotterIdentity(this.payload.token);
-            this.validToken = cotterIdentity.validate();
+            var cotterID = new CotterIdentity(this.payload.token);
+           
+            this.validToken = cotterID.validate();
+            var message = (this.validToken) ? "Validation Successful": "Validation Failed";
+            alert(message);
+            console.log("done verify");
         },
     },
 
@@ -82,4 +82,5 @@ export default {
         color: white;
         overflow: scroll;
     }
+
 </style>
