@@ -23,26 +23,17 @@ export default {
         }
     },
     mounted () {
-        var config = {
-            ApiKeyID: "28c090a0-6067-457d-976a-b0ac664f05fc",
-            Type: "EMAIL",
-            ContainerID: "cotter-form-container",
-            SkipRedirectURL: true,
-            IdentifierField: "email",
-            OnSuccess: payload => {
-                this.success = true;
-                this.payload = payload;
-                this.payloadString = JSON.stringify(payload, null, 4);
-                alert(this.payloadString);
-            },
-            OnError: (error) => {
-                console.log(error);
-                alert(error);
-            }
-        };
-
-        var cotter = new Cotter(config);
-        cotter.showForm();
+        var cotter = new Cotter("28c090a0-6067-457d-976a-b0ac664f05fc");
+        cotter.signInWithLink().showEmailForm()
+        .then(payload => {
+            this.success = true;
+            this.payload = payload;
+            this.payloadString = JSON.stringify(payload, null, 4);
+            alert(this.payloadString);
+        }).catch(err => {
+            console.log(err);
+            alert(err);
+        })
     },
     methods: {
         verifyCotter() {
