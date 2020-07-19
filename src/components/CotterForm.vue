@@ -20,6 +20,7 @@ export default {
             payload: null,
             payloadString: null,
             validToken: false,
+            accessToken: null,
         }
     },
     mounted () {
@@ -28,6 +29,8 @@ export default {
         .then(payload => {
             this.success = true;
             this.payload = payload;
+            this.accessToken = this.payload.oauth_token.access_token
+            console.log("payload received: ", this.payload.oauth_token.access_token);
             this.payloadString = JSON.stringify(payload, null, 4);
             alert(this.payloadString);
         }).catch(err => {
@@ -43,7 +46,7 @@ export default {
             var message = (this.validToken) ? "Validation Successful": "Validation Failed";
             alert(message);
             console.log("done verify");
-        },
+        }
     },
 
 }
@@ -62,6 +65,10 @@ export default {
     }
 
     #verify-button {
+        width: 300px;
+    }
+
+    #verify-token-button {
         width: 300px;
     }
 
